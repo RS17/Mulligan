@@ -1,3 +1,4 @@
+package com.github.rs17.mulligan
 class DefaultUI extends DefaultStruct {
   def output(defaultModule: DefaultModule) = {
     println(makeText(defaultModule))

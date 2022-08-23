@@ -1,3 +1,5 @@
+package com.github.rs17.mulligan
+
 trait DefaultElement[+A] extends DefaultObject with Castable[A] {
   override def constructSample: DefaultElement[Any] = DefaultElement
 

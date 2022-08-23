@@ -1,3 +1,5 @@
+package com.github.rs17.mulligan
+
 import java.util.concurrent.atomic.AtomicLong
 
 import scala.collection.mutable

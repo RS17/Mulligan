@@ -1,5 +1,5 @@
-// why not abstract?  Because making it abstract means you can't test the class itself.
-// Is having a non-abstract class that's used entirely as an abstract class an anti-pattern?  Probably.  Do I care?  No.
+package com.github.rs17.mulligan
+
 import cats.effect.IO
 import org.http4s.circe._
 import io.circe.generic.auto._

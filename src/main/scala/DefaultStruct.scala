@@ -1,3 +1,5 @@
+package com.github.rs17.mulligan
+
 class DefaultStruct(key_i: Option[DefaultElement[Any]] = None) extends DefaultObject {
   val key: Option[DefaultElement[Any]] = Some(key_i.getOrElse(DefaultString(this.getClass.getName + this.hashCode())))
 

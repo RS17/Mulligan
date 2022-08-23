@@ -1,3 +1,5 @@
+package com.github.rs17.mulligan
+
 // this is probably totally unnecessary but it's a fun scala exercise
 // It's a monad that allows you to cast without casting or something.  I imagine this will help somehow with apis
 // but that may be silly

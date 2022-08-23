@@ -1,3 +1,5 @@
+package com.github.rs17.mulligan
+
 import cats.effect._
 import org.http4s._
 import org.http4s.dsl.io.{->, /, Ok, _}

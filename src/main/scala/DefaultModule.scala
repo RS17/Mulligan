@@ -1,3 +1,5 @@
+package com.github.rs17.mulligan
+
 import io.circe.Json
 import org.http4s.circe._
 import io.circe.generic.auto._

@@ -1,3 +1,5 @@
+package com.github.rs17.mulligan
+
 import java.io.{File, FileInputStream, FileOutputStream, InvalidClassException, ObjectInputStream, ObjectOutputStream}
 import java.lang.System.Logger
 

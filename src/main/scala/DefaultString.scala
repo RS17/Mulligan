@@ -1,3 +1,4 @@
+package com.github.rs17.mulligan
 
 case class DefaultString(v: String) extends DefaultElement[String]{
   override val value = v

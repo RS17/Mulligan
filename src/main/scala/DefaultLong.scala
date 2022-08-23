@@ -1,4 +1,4 @@
-
+package com.github.rs17.mulligan
 case class DefaultLong(v: Long) extends DefaultElement[Long] with Ordered[DefaultObject]{
   override val value = v
   override def testMe: Boolean = {
