@@ -19,6 +19,7 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-literal" % circeVersion,
   "org.typelevel" %% "cats-effect" % "3.3.12",
   "org.http4s" %% "http4s-circe" % http4sVersion,
+  "org.scalatra.scalate" %% "scalate-core" % "1.9.6"
 )
 
 publishTo := Some(Resolver.file("file",  new File( "./artifacts/" )) )
