@@ -5,7 +5,7 @@ object Demo {
     while(true) {
       println("Welcome to Mulligan demo! Enter text to have it stored and displayed forever.  Note the minimal code.")
       val module = DefaultModule
-      //module.load()
+      MustacheUIGen
       module.output
       module.post(DefaultString(scala.io.StdIn.readLine("input: ").stripLineEnd))
     }
