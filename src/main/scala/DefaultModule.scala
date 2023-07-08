@@ -1,14 +1,17 @@
 package com.github.rs17.mulligan
 
+import api.DefaultAPI
+import db.{DefaultDB, FileStorageDB}
 import io.circe.Json
 import org.http4s.circe._
 import io.circe.generic.auto._
 import io.circe.syntax._
 
 class DefaultModule extends DefaultStruct(Some(DefaultString("DefaultModule"))){
-  val db: Option[DefaultDB] = Some(new DefaultDB)
-  val ui: Option[DefaultUI] = Some(new DefaultUI)
-  val api: Option[DefaultAPI] = Some(new DefaultAPI(this))
+  // Note: overriding these values must include the "lazy" keyword or will cause a null reference. See: https://docs.scala-lang.org/tutorials/FAQ/initialization-order.html
+  lazy val db: Option[DefaultDB] = Some(new FileStorageDB)
+  lazy val ui: Option[DefaultUI] = Some(new DefaultUI)
+  lazy val api: Option[DefaultAPI] = Some(new DefaultAPI(this))
 
   val savedPayload: Option[DefaultMap] = load
   val payload: DefaultMap = if(savedPayload.isDefined){

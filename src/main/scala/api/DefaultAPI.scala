@@ -1,28 +1,27 @@
-package com.github.rs17.mulligan
+package api
 
 import cats.effect._
-import org.http4s._
-import org.http4s.dsl.io.{->, /, Ok, _}
 import cats.effect.unsafe.IORuntime
-import org.http4s.ember.server._
-import org.http4s.server.Router
-import org.http4s.implicits._
-import com.comcast.ip4s._
 import cats.syntax.all._
+import com.comcast.ip4s._
+import com.github.rs17.mulligan.{DefaultLong, DefaultModule, DefaultString, DefaultStruct}
 import io.circe.generic.auto._
-import org.http4s.circe.CirceEntityDecoder._
-import io.circe._
-import io.circe.literal._
-import org.http4s.Uri.Path
-import org.http4s.Uri.Path.Segment
-import org.http4s.UriTemplate.PathElm
+import org.http4s._
 import org.http4s.circe.jsonOf
+import org.http4s.dsl.io.{->, /, Ok, _}
+import org.http4s.dsl.request.:?
+import org.http4s.ember.server._
+import org.http4s.implicits._
+import org.http4s.server.Router
 
 // plan is to use http4s: https://www.growin.com/blog/three-scala-solutions-for-rest-apis/
 // Note: It may seem to make sense that an API is a module rather than a struct. But a module *has* an API. A DefaultAPI
 // is not an API Server - it's just the interface part. So in this case it's really just a component of a module.  To
 // make a separate API Server, the server itself should be a module with an API.
-class DefaultAPI(module: DefaultModule) extends DefaultStruct{
+// One major problem is using Kleisli makes this a major problem to debug and provide logs as to what's going on.
+
+// Also, what is a kleisli?  Beats me. But this article is the best explanation I've found: https://sanj.ink/posts/2017-06-07-composing-monadic-functions-with-kleisli-arrows.html
+class DefaultAPI(module: DefaultModule) extends DefaultStruct {
   implicit val runtime: IORuntime = cats.effect.unsafe.IORuntime.global
   // root path is <host>:8080/api/<modulekey>
   val path = Root.addSegment(module.key.getOrElse(DefaultString("")).toString)
@@ -30,6 +29,7 @@ class DefaultAPI(module: DefaultModule) extends DefaultStruct{
   // would be nice to add limits and pagination at some point
   object OptionalKeyParamDecoderMatcher
     extends OptionalQueryParamDecoderMatcher[String]("key")
+
   val defaultGet = HttpRoutes.of[IO] {
     case GET -> path :? OptionalKeyParamDecoderMatcher(maybeKey)=>
       maybeKey match {
@@ -61,9 +61,9 @@ class DefaultAPI(module: DefaultModule) extends DefaultStruct{
   }
 
   // Note: Order here matters! Will try to match first ones first
-  val services = defaultGetSample <+> defaultGet <+> defaultPut <+> defaultPost <+> defaultDelete
+  lazy val endpoints: HttpRoutes[IO] = defaultGetSample <+> defaultGet <+> defaultPut <+> defaultPost <+> defaultDelete
   val apiRoot = "/api"
-  val httpApp = Router(apiRoot -> services).orNotFound
+  val httpApp = Router(apiRoot -> endpoints).orNotFound
   val server = EmberServerBuilder
     .default[IO]
     .withHost(ipv4"0.0.0.0")

@@ -38,4 +38,6 @@ class DefaultMap(key_i: Option[DefaultElement[Any]] = None) extends DefaultStruc
     internalMap.remove(key)
   }
 
+  def keys(): Iterable[DefaultObject] = internalMap.keys
+
 }

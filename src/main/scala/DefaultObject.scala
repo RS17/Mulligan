@@ -1,8 +1,6 @@
 package com.github.rs17.mulligan
 
-import cats.effect.IO
-import org.http4s.circe._
-import io.circe.generic.auto._
+import db.DefaultDB
 
 trait DefaultObject extends Serializable with Ordered[DefaultObject]{
   /**
